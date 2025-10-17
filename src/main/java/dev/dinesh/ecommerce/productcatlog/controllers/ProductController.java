@@ -1,6 +1,10 @@
 package dev.dinesh.ecommerce.productcatlog.controllers;
 
 
+import dev.dinesh.ecommerce.productcatlog.dto.GenericProductDto;
+import dev.dinesh.ecommerce.productcatlog.models.Product;
+import dev.dinesh.ecommerce.productcatlog.services.ProductService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -9,19 +13,26 @@ import java.util.UUID;
 @RequestMapping("/products")
 public class ProductController {
 
+    //@Autowired
+    private ProductService productService;
+
+    public   ProductController(ProductService productService) {
+        this.productService = productService;
+    }
+
     @GetMapping()
     public String getAllProducts(){
         return "Products List";
     }
 
     @GetMapping("{id}")
-    public  String getProductById(@PathVariable("id") Long id){
-        return "Product with id " + id;
+    public GenericProductDto getProductById(@PathVariable("id") Long id){
+        return  productService.getProductById(id);
     }
 
     @PostMapping
-    public String createProduct() {
-        return "Product Created with id "+ UUID.randomUUID();
+    public GenericProductDto createProduct( @RequestBody GenericProductDto product) {
+        return productService.createProduct(product);
     }
 
     @DeleteMapping("{id}")
