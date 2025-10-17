@@ -2,19 +2,18 @@ package dev.dinesh.ecommerce.productcatlog.controllers;
 
 
 import dev.dinesh.ecommerce.productcatlog.dto.GenericProductDto;
-import dev.dinesh.ecommerce.productcatlog.models.Product;
+//import dev.dinesh.ecommerce.productcatlog.models.Product;
 import dev.dinesh.ecommerce.productcatlog.services.ProductService;
-import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/products")
 public class ProductController {
 
     //@Autowired
-    private ProductService productService;
+    private final ProductService productService;
 
     public   ProductController(ProductService productService) {
         this.productService = productService;
