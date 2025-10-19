@@ -5,7 +5,11 @@ import dev.dinesh.ecommerce.productcatlog.dto.GenericProductDto;
 //import dev.dinesh.ecommerce.productcatlog.models.Product;
 import dev.dinesh.ecommerce.productcatlog.services.ProductService;
 //import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
 
 
 @RestController
@@ -19,9 +23,9 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @GetMapping()
-    public String getAllProducts(){
-        return "Products List";
+    @GetMapping
+    public ArrayList<GenericProductDto> getAllProducts(){
+        return productService.getAllProducts();
     }
 
     @GetMapping("{id}")
@@ -35,13 +39,14 @@ public class ProductController {
     }
 
     @DeleteMapping("{id}")
-    public  String deleteProductById(@PathVariable("id") Long id){
-        return "Product deleted with id "+ id;
+    public ResponseEntity<GenericProductDto> deleteProductById(@PathVariable("id") Long id){
+
+        return new ResponseEntity<>(productService.deleteProductById(id), HttpStatus.NOT_FOUND);
     }
 
     @PutMapping("{id}")
-    public  String updateProductById(@PathVariable("id") Long id){
+    public  GenericProductDto updateProductById(@PathVariable("id") Long id, @RequestBody GenericProductDto product) {
 
-        return "Product updated with id "+ id;
+        return productService.updateProductById(id,product);
     }
 }
